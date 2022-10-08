@@ -72,9 +72,9 @@ def q1():
     # The tunable hyperparmeters for the 3 kernels - all initialized to 1
     # Change values to the optimal values for dataset 1
     ######START: TO DO########
-    kernel_params = {'sigma_gauss':1,
-                    'gamma_rbf':1,
-                    'sigma_laplace':1}
+    kernel_params = {'sigma_gauss':1.75,
+                    'gamma_rbf':1.5,
+                    'sigma_laplace':20}
     ######END: TO DO########
     
     reg1 = SVM_Regression(kernel=gauss_kernel)
@@ -98,9 +98,9 @@ def q1():
     # The tunable hyperparmeters for the 3 kernels - all initialized to 1
     # Change values to the optimal values for dataset 2
     ######START: TO DO########
-    kernel_params = {'sigma_gauss':1,
-                    'gamma_rbf':1,
-                    'sigma_laplace':1}
+    kernel_params = {'sigma_gauss':2,
+                    'gamma_rbf':0.15,
+                    'sigma_laplace':8}
     ######END: TO DO########
     
     reg1 = SVM_Regression(kernel=gauss_kernel)

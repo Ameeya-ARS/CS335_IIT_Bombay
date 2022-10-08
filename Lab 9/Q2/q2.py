@@ -15,20 +15,21 @@ def kernel_pca(X: np.ndarray, kernel: str) -> np.ndarray:
     K = np.zeros((X.shape[0],X.shape[0]))
     if kernel=='rbf':
         gamma = 15
-        for i in range(X.shape[0]):
-            for j in range(X.shape[0]):
-                K[i][j] = np.exp(-1*gamma*(np.linalg.norm(X[i]-X[j]))**2)
+        X1 = np.sum(X**2, axis=-1)
+        X2 = np.sum(X**2, axis=-1)
+        K =np.exp(-gamma*(X1[:,None] + X2[None,:] - 2*np.dot(X,X.T)))
     if kernel=='poly':
         d = 5
         K = (np.dot(X,X.T))+1
         K = K**d
     if kernel=='radial':
-        x,y = X[:,0], X[:,1]
-        r = np.sqrt(x**2+y**2)
-        theta = np.arctan2(y,x)
-        for i in range(X.shape[0]):
-            for j in range(X.shape[0]):
-                K[i][j] = (r[i]*r[j])+(theta[i]*theta[j])
+        R = np.linalg.norm(X, axis=1)
+        R = np.reshape(R, (R.shape[0], 1))
+        R = np.matmul(R, R.T)
+        theta= np.arctan2(X[:,1], X[:,0])
+        theta = np.reshape(theta, (theta.shape[0], 1))
+        theta = np.matmul(theta, theta.T)
+        K = R + theta
         
     N = K.shape[0]
     one_n = np.ones((N,N)) / N

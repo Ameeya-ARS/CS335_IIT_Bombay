@@ -507,12 +507,6 @@ def predict(X_test, dataset_name):
 Loading data and training models
 """
 if __name__ == "__main__":    
-    dataset = "mnist" 
-    with open(f"./data/{dataset}_train.pkl", "rb") as file:
-        train_mnist = pkl.load(file)
-        print(f"train_x -- {train_mnist[0].shape}; train_y -- {train_mnist[1].shape}")
-    
-    fit(train_mnist[0],train_mnist[1],'mnist')
     
     dataset = "flowers"
     with open(f"./data/{dataset}_train.pkl", "rb") as file:

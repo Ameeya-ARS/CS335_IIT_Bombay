@@ -14,26 +14,37 @@ def LU_decomposition(A: np.array):
     """
     L, U = np.zeros(A.shape), np.zeros(A.shape)
     ## TODO
-    L, U = np.zeros(A.shape), np.zeros(A.shape)
-    ## TODO
-    size = A.shape[0]
-    L = np.eye(size,dtype=np.double)
-    U = A.copy()
-    for i in range(size):
-        for j in range(i,size):
-            res = 0
-            for k in range(i):
-                res = res + (L[i][k]*U[k][j])
-            U[i][j] = A[i][j] - res
-
-        for j in range(i,size):
-            if(i==j):
-                L[i][i] = 1
+    # Decomposing matrix into Upper
+    # and Lower triangular matrix
+    n = A.shape[0]
+    for i in range(n):
+ 
+        # Upper Triangular
+        for k in range(i, n):
+ 
+            # Summation of L(i, j) * U(j, k)
+            sum = 0
+            for j in range(i):
+                sum += (L[i][j] * U[j][k])
+ 
+            # Evaluating U(i, k)
+            U[i][k] = A[i][k] - sum
+ 
+        # Lower Triangular
+        for k in range(i, n):
+            if (i == k):
+                L[i][i] = 1  # Diagonal as 1
             else:
-                res = 0
-                for k in range(i):
-                    res = res + (L[j][k]*U[k][i])
-                L[j][i] = (A[j][i]-res)/U[i][i]
+ 
+                # Summation of L(k, j) * U(j, i)
+                sum = 0
+                for j in range(i):
+                    sum += (L[k][j] * U[j][i])
+ 
+                # Evaluating L(k, i)
+                L[k][i] = int((A[k][i] - sum) /
+                                  U[i][i])
+
     ## END TODO
     assert L.shape == A.shape and U.shape == A.shape, "Return matrices of the same shape as A"
     return L, U
